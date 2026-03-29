@@ -4,6 +4,8 @@ import { scoresApi, sessionsApi, type ScoreResult } from '../api';
 import SnakeGame from '../games/snake/SnakeGame';
 import MemoryGame from '../games/memory/MemoryGame';
 import DinoGame from '../games/dino/DinoGame';
+import FlappyGame from '../games/flappy/FlappyGame';
+import BubbleGame from '../games/bubble/BubbleGame';
 import { Trophy, ArrowLeft, RotateCcw, Star, Award, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import './GameRoomPage.css';
@@ -19,12 +21,16 @@ const GAME_COMPONENTS: Record<string, AnyGameComponent> = {
   snake: SnakeGame as unknown as AnyGameComponent,
   memory: MemoryGame as unknown as AnyGameComponent,
   dino: DinoGame as unknown as AnyGameComponent,
+  flappy: FlappyGame as unknown as AnyGameComponent,
+  bubble: BubbleGame as unknown as AnyGameComponent,
 };
 
 const GAME_LABELS: Record<string, { name: string; emoji: string }> = {
   snake:  { name: 'Snake',        emoji: '🐍' },
   memory: { name: 'Memory Match', emoji: '🃏' },
   dino:   { name: 'Dino Run',     emoji: '🦕' },
+  flappy: { name: 'Flappy Bird',  emoji: '🐦' },
+  bubble: { name: 'Pop the AI Bubble', emoji: '🫧' },
 };
 
 export default function GameRoomPage() {

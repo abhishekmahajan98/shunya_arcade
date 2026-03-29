@@ -8,12 +8,16 @@ const EMOJI_COLORS: Record<string, string> = {
   snake:  'var(--accent-3)',
   memory: 'var(--accent-2)',
   dino:   'var(--accent-4)',
+  flappy: 'var(--accent-1)',
+  bubble: 'var(--accent-5)',
 };
 
 const TAG_GRADIENTS: Record<string, string> = {
   snake:  'linear-gradient(135deg, #4ecdc4, #2ea8a0)',
   memory: 'linear-gradient(135deg, #f7706f, #e85555)',
   dino:   'linear-gradient(135deg, #ffd166, #f5a623)',
+  flappy: 'linear-gradient(135deg, #70c5ce, #48b1ba)',
+  bubble: 'linear-gradient(135deg, #a855f7, #6b21a8)',
 };
 
 export default function LobbyPage() {
