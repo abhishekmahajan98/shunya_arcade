@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         if not v or not isinstance(v, str):
             return v
         
-        # 1. Clean the string (removes hidden characters or quotes that cause 'ostgresql' errors)
+        # 1. Clean the string (removes hidden characters or quotes)
         v = v.strip().replace('"', '').replace("'", "")
         
         # 2. Normalize typical Railway/Heroku 'postgres://' to 'postgresql://'
