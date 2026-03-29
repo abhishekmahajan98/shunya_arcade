@@ -56,6 +56,7 @@ app = FastAPI(
     version="1.0.0",
     description="Backend API for the Shunya Arcade employee gaming platform.",
     lifespan=lifespan,
+    debug=settings.DEBUG,
 )
 
 app.add_middleware(
