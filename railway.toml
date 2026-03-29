@@ -1,13 +1,11 @@
 [build]
 builder = "NIXPACKS"
-rootDirectory = "backend"
 
 [deploy]
-startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
-rootDirectory = "backend"
+startCommand = "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
 restartPolicyType = "ON_FAILURE"
  healthCheckPath = "/api/health"
  healthCheckTimeout = 100
 
 [deploy.env]
-PYTHONPATH = "."
+PYTHONPATH = "backend"
