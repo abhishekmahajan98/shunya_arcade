@@ -79,6 +79,15 @@ class ScoreOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ScoreSubmissionResult(BaseModel):
+    id: uuid.UUID
+    score: int
+    is_high_score: bool
+    percentile_vs_self: float | None = None
+    percentile_vs_others: float | None = None
+    achieved_at: datetime
+
+
 # ── Leaderboard ────────────────────────────────────────────────────────────────
 
 class LeaderboardEntry(BaseModel):
@@ -98,6 +107,7 @@ class LeaderboardOut(BaseModel):
     entries: list[LeaderboardEntry]
     my_rank: int | None = None
     my_best_score: int | None = None
+    my_percentile: float | None = None
 
 
 

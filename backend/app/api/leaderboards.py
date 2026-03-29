@@ -69,19 +69,49 @@ async def game_leaderboard(
     # Fetch caller's own best score + rank
     my_rank = None
     my_best_score = None
+    my_percentile = None
+
+    # Total unique players for this game
+    total_players = (
+        await db.execute(
+            select(func.count(func.distinct(Score.user_id)))
+            .where(Score.game_id == game_id)
+        )
+    ).scalar() or 0
+
     my_entry = next((e for e in entries if e.user_id == current_user.user_id), None)
     if my_entry:
         my_rank = my_entry.rank
         my_best_score = my_entry.score
     else:
+        # If not in top 20, we need to find their rank globally
         my_score_row = (
             await db.execute(
                 select(func.max(Score.score) if order_dir == "DESC" else func.min(Score.score))
                 .where(Score.game_id == game_id, Score.user_id == current_user.user_id)
             )
         ).scalar_one_or_none()
+        
         if my_score_row:
             my_best_score = my_score_row
+            # Calculate rank for this score among unique users
+            rank_query = text(f"""
+                WITH best AS (
+                    SELECT user_id, MAX(score) as top_score
+                    FROM scores
+                    WHERE game_id = :game_id
+                    GROUP BY user_id
+                )
+                SELECT COUNT(*) + 1 FROM best 
+                WHERE top_score {" > " if order_dir == "DESC" else " < "} :my_score
+            """)
+            my_rank = (await db.execute(rank_query, {"game_id": game_id, "my_score": my_best_score})).scalar()
+
+    if my_rank and total_players > 1:
+        # Standard percentile calculation
+        my_percentile = round(((total_players - my_rank) / (total_players - 1)) * 100, 1)
+    elif my_rank and total_players == 1:
+        my_percentile = 100.0
 
     return LeaderboardOut(
         game_id=game_id,
@@ -91,4 +121,5 @@ async def game_leaderboard(
         entries=entries,
         my_rank=my_rank,
         my_best_score=my_best_score,
+        my_percentile=my_percentile,
     )

@@ -39,6 +39,48 @@
 .lb-tab:hover { background: var(--bg-elevated); color: var(--text-primary); }
 .lb-tab.active { background: var(--bg-card); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 
+.lb-subtabs {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+}
+
+.lb-subtab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.lb-subtab:hover {
+  color: var(--text-primary);
+}
+
+.lb-subtab.active {
+  color: var(--accent-1);
+}
+
+.lb-subtab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-1);
+  border-radius: 2px;
+}
+
 
 
 .lb-loading { display: flex; flex-direction: column; gap: 12px; }
@@ -54,6 +96,17 @@
   font-size: 13.5px;
 }
 .my-rank-banner strong { color: var(--accent-1); }
+
+.percentile-tag {
+  margin-left: 12px;
+  padding: 2px 8px;
+  background: rgba(124,111,247,0.15);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 12px;
+  border: 1px solid rgba(124,111,247,0.3);
+}
 
 .lb-table {
   width: 100%;

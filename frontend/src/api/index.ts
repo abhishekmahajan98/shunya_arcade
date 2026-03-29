@@ -31,6 +31,7 @@ export interface LeaderboardData {
   entries: LeaderboardEntry[];
   my_rank: number | null;
   my_best_score: number | null;
+  my_percentile: number | null;
 }
 
 
@@ -43,6 +44,17 @@ export interface ScoreSubmitPayload {
 
 export interface ScoreResult {
   id: string;
+  score: number;
+  is_high_score: boolean;
+  percentile_vs_self: number | null;
+  percentile_vs_others: number | null;
+  achieved_at: string;
+}
+
+export interface ScoreOut {
+  id: string;
+  user_id: string;
+  game_id: string;
   score: number;
   achieved_at: string;
 }
@@ -60,6 +72,8 @@ export const leaderboardApi = {
 export const scoresApi = {
   submit: (payload: ScoreSubmitPayload) =>
     api.post<ScoreResult>('/scores', payload).then((r) => r.data),
+  getHistory: (gameId: string) =>
+    api.get<ScoreOut[]>(`/scores/history/${gameId}`).then((r) => r.data),
 };
 
 export const sessionsApi = {
